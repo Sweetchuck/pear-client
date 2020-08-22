@@ -1,0 +1,2414 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "1.3.0",
+        "title": "PEAR channel server REST interface",
+        "description": "# API description in Markdown.\n\n[Official documentation](https://pear.php.net/manual/en/core.rest.php)\n"
+    },
+    "servers": [
+        {
+            "url": "https://pear.php.net/rest"
+        },
+        {
+            "url": "https://pecl.php.net/rest"
+        }
+    ],
+    "tags": [
+        {
+            "name": "category"
+        },
+        {
+            "name": "maintainer"
+        },
+        {
+            "name": "package"
+        },
+        {
+            "name": "release"
+        }
+    ],
+    "components": {
+        "parameters": {
+            "categoryName": {
+                "required": true,
+                "name": "categoryName",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "maintainerName": {
+                "required": true,
+                "name": "maintainerName",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "packageName": {
+                "required": true,
+                "name": "packageName",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "version": {
+                "required": true,
+                "name": "version",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas": {
+            "dependency": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "version": {
+                        "type": "string"
+                    },
+                    "definition": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                }
+            },
+            "dependencies": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "version": {
+                            "type": "string"
+                        },
+                        "definition": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "deprecatedInFavorOf": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "channel": {
+                        "type": "string"
+                    }
+                }
+            },
+            "category": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "channel": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "alias": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "href": {
+                        "type": "string",
+                        "xml": {
+                            "prefix": "xlink",
+                            "namespace": "http://www.w3.org/1999/xlink",
+                            "attribute": true
+                        }
+                    }
+                }
+            },
+            "maintainer": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "href": {
+                        "type": "string",
+                        "xml": {
+                            "prefix": "xlink",
+                            "namespace": "http://www.w3.org/1999/xlink",
+                            "attribute": true
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "maintainer handle\n"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "homepage": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "active maintainer\n"
+                    },
+                    "role": {
+                        "type": "string",
+                        "description": "maintainer role (lead/developer/helper/contributor)\n"
+                    }
+                }
+            },
+            "maintainers": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "href": {
+                            "type": "string",
+                            "xml": {
+                                "prefix": "xlink",
+                                "namespace": "http://www.w3.org/1999/xlink",
+                                "attribute": true
+                            }
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "maintainer handle\n"
+                        },
+                        "displayName": {
+                            "type": "string"
+                        },
+                        "homepage": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "active maintainer\n"
+                        },
+                        "role": {
+                            "type": "string",
+                            "description": "maintainer role (lead/developer/helper/contributor)\n"
+                        }
+                    }
+                }
+            },
+            "package": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "href": {
+                        "type": "string"
+                    },
+                    "channel": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                            "channel": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "alias": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "href": {
+                                "type": "string",
+                                "xml": {
+                                    "prefix": "xlink",
+                                    "namespace": "http://www.w3.org/1999/xlink",
+                                    "attribute": true
+                                }
+                            }
+                        }
+                    },
+                    "license": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "deprecatedInFavorOf": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "channel": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "releasesHref": {
+                        "type": "string"
+                    },
+                    "releases": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "version": {
+                                    "type": "string"
+                                },
+                                "stability": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "dependencies": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "version": {
+                                    "type": "string"
+                                },
+                                "definition": {
+                                    "type": "object",
+                                    "additionalProperties": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "release": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "version": {
+                        "type": "string"
+                    },
+                    "stability": {
+                        "type": "string"
+                    }
+                }
+            },
+            "releases": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "version": {
+                            "type": "string"
+                        },
+                        "stability": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "releaseDetails": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "packageName": {
+                        "type": "string"
+                    },
+                    "channel": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "stability": {
+                        "type": "string"
+                    },
+                    "license": {
+                        "type": "string"
+                    },
+                    "maintainer": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "baseUri": {
+                        "type": "string"
+                    },
+                    "minPhp": {
+                        "type": "string"
+                    }
+                }
+            },
+            "categoriesGetResponse": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "channel": {
+                        "type": "string",
+                        "xml": {
+                            "name": "ch"
+                        }
+                    },
+                    "categories": {
+                        "type": "array",
+                        "xml": {
+                            "name": "c"
+                        },
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "channel": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "alias": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string",
+                                    "xml": {
+                                        "prefix": "xlink",
+                                        "namespace": "http://www.w3.org/1999/xlink",
+                                        "attribute": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "categoryInfoGetResponse": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "channel": {
+                        "type": "string",
+                        "xml": {
+                            "name": "c"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "xml": {
+                            "name": "n"
+                        }
+                    },
+                    "alias": {
+                        "type": "string",
+                        "xml": {
+                            "name": "a"
+                        }
+                    },
+                    "description": {
+                        "type": "string",
+                        "xml": {
+                            "name": "d"
+                        }
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "categoryPackagesGetResponse": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "href": {
+                            "type": "string"
+                        },
+                        "channel": {
+                            "type": "string"
+                        },
+                        "category": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "channel": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "alias": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string",
+                                    "xml": {
+                                        "prefix": "xlink",
+                                        "namespace": "http://www.w3.org/1999/xlink",
+                                        "attribute": true
+                                    }
+                                }
+                            }
+                        },
+                        "license": {
+                            "type": "string"
+                        },
+                        "summary": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "deprecatedInFavorOf": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "channel": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "releasesHref": {
+                            "type": "string"
+                        },
+                        "releases": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object",
+                                "additionalProperties": true,
+                                "properties": {
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "stability": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "dependencies": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object",
+                                "additionalProperties": true,
+                                "properties": {
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "definition": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "categoryPackagesInfoGetResponse": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "href": {
+                            "type": "string"
+                        },
+                        "channel": {
+                            "type": "string"
+                        },
+                        "category": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "channel": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "alias": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string",
+                                    "xml": {
+                                        "prefix": "xlink",
+                                        "namespace": "http://www.w3.org/1999/xlink",
+                                        "attribute": true
+                                    }
+                                }
+                            }
+                        },
+                        "license": {
+                            "type": "string"
+                        },
+                        "summary": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "deprecatedInFavorOf": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "channel": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "releasesHref": {
+                            "type": "string"
+                        },
+                        "releases": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object",
+                                "additionalProperties": true,
+                                "properties": {
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "stability": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "dependencies": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object",
+                                "additionalProperties": true,
+                                "properties": {
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "definition": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "packagesGetResponse": {
+                "type": "object",
+                "properties": {
+                    "channel": {
+                        "type": "string"
+                    },
+                    "packageNames": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "packageMaintainersGetResponse": {
+                "type": "object",
+                "properties": {
+                    "channel": {
+                        "type": "string"
+                    },
+                    "packageName": {
+                        "type": "string"
+                    },
+                    "list": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "href": {
+                                    "type": "string",
+                                    "xml": {
+                                        "prefix": "xlink",
+                                        "namespace": "http://www.w3.org/1999/xlink",
+                                        "attribute": true
+                                    }
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "maintainer handle\n"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "homepage": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "nullable": true,
+                                    "description": "active maintainer\n"
+                                },
+                                "role": {
+                                    "type": "string",
+                                    "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "allReleasesGetResponse": {
+                "type": "object",
+                "properties": {
+                    "channel": {
+                        "type": "string"
+                    },
+                    "packageName": {
+                        "type": "string"
+                    },
+                    "releases": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "version": {
+                                    "type": "string"
+                                },
+                                "stability": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "plainTextResponse": {
+                "type": "string"
+            }
+        }
+    },
+    "paths": {
+        "/c/categories.xml": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "List of all categories",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "ch"
+                                            }
+                                        },
+                                        "categories": {
+                                            "type": "array",
+                                            "xml": {
+                                                "name": "c"
+                                            },
+                                            "items": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "channel": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "alias": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "ch"
+                                            }
+                                        },
+                                        "categories": {
+                                            "type": "array",
+                                            "xml": {
+                                                "name": "c"
+                                            },
+                                            "items": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "channel": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "alias": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/c/{categoryName}/info.xml": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Info about the category",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "categoryName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "c"
+                                            }
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "n"
+                                            }
+                                        },
+                                        "alias": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "a"
+                                            }
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "d"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ]
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "c"
+                                            }
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "n"
+                                            }
+                                        },
+                                        "alias": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "a"
+                                            }
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "xml": {
+                                                "name": "d"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/c/{categoryName}/packages.xml": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "List of packages in category",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "categoryName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": true,
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            },
+                                            "channel": {
+                                                "type": "string"
+                                            },
+                                            "category": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "channel": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "alias": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "license": {
+                                                "type": "string"
+                                            },
+                                            "summary": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "deprecatedInFavorOf": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "channel": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "releasesHref": {
+                                                "type": "string"
+                                            },
+                                            "releases": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "stability": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "dependencies": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "definition": {
+                                                            "type": "object",
+                                                            "additionalProperties": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": true,
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            },
+                                            "channel": {
+                                                "type": "string"
+                                            },
+                                            "category": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "channel": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "alias": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "license": {
+                                                "type": "string"
+                                            },
+                                            "summary": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "deprecatedInFavorOf": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "channel": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "releasesHref": {
+                                                "type": "string"
+                                            },
+                                            "releases": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "stability": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "dependencies": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "definition": {
+                                                            "type": "object",
+                                                            "additionalProperties": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/c/{categoryName}/packagesinfo.xml": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Info about all packages",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "categoryName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": true,
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            },
+                                            "channel": {
+                                                "type": "string"
+                                            },
+                                            "category": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "channel": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "alias": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "license": {
+                                                "type": "string"
+                                            },
+                                            "summary": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "deprecatedInFavorOf": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "channel": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "releasesHref": {
+                                                "type": "string"
+                                            },
+                                            "releases": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "stability": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "dependencies": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "definition": {
+                                                            "type": "object",
+                                                            "additionalProperties": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": true,
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            },
+                                            "channel": {
+                                                "type": "string"
+                                            },
+                                            "category": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "channel": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "alias": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "license": {
+                                                "type": "string"
+                                            },
+                                            "summary": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "deprecatedInFavorOf": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "channel": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "releasesHref": {
+                                                "type": "string"
+                                            },
+                                            "releases": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "stability": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "dependencies": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                    "type": "object",
+                                                    "additionalProperties": true,
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        },
+                                                        "definition": {
+                                                            "type": "object",
+                                                            "additionalProperties": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/m/allmaintainers.xml": {
+            "get": {
+                "tags": [
+                    "maintainer"
+                ],
+                "summary": "Info about all maintainers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": true,
+                                        "properties": {
+                                            "href": {
+                                                "type": "string",
+                                                "xml": {
+                                                    "prefix": "xlink",
+                                                    "namespace": "http://www.w3.org/1999/xlink",
+                                                    "attribute": true
+                                                }
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "description": "maintainer handle\n"
+                                            },
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "homepage": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "integer",
+                                                "nullable": true,
+                                                "description": "active maintainer\n"
+                                            },
+                                            "role": {
+                                                "type": "string",
+                                                "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": true,
+                                        "properties": {
+                                            "href": {
+                                                "type": "string",
+                                                "xml": {
+                                                    "prefix": "xlink",
+                                                    "namespace": "http://www.w3.org/1999/xlink",
+                                                    "attribute": true
+                                                }
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "description": "maintainer handle\n"
+                                            },
+                                            "displayName": {
+                                                "type": "string"
+                                            },
+                                            "homepage": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "integer",
+                                                "nullable": true,
+                                                "description": "active maintainer\n"
+                                            },
+                                            "role": {
+                                                "type": "string",
+                                                "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/m/{maintainerName}/info.xml": {
+            "get": {
+                "tags": [
+                    "maintainer"
+                ],
+                "summary": "Info about the given maintainer",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "maintainerName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "xml": {
+                                                "prefix": "xlink",
+                                                "namespace": "http://www.w3.org/1999/xlink",
+                                                "attribute": true
+                                            }
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "description": "maintainer handle\n"
+                                        },
+                                        "displayName": {
+                                            "type": "string"
+                                        },
+                                        "homepage": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "active maintainer\n"
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "xml": {
+                                                "prefix": "xlink",
+                                                "namespace": "http://www.w3.org/1999/xlink",
+                                                "attribute": true
+                                            }
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "description": "maintainer handle\n"
+                                        },
+                                        "displayName": {
+                                            "type": "string"
+                                        },
+                                        "homepage": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "active maintainer\n"
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/p/packages.xml": {
+            "get": {
+                "tags": [
+                    "package"
+                ],
+                "summary": "List of all packages",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageNames": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageNames": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/p/{packageName}/info.xml": {
+            "get": {
+                "tags": [
+                    "package"
+                ],
+                "summary": "Info about the given package",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "category": {
+                                            "type": "object",
+                                            "additionalProperties": true,
+                                            "properties": {
+                                                "channel": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "alias": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "href": {
+                                                    "type": "string",
+                                                    "xml": {
+                                                        "prefix": "xlink",
+                                                        "namespace": "http://www.w3.org/1999/xlink",
+                                                        "attribute": true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "license": {
+                                            "type": "string"
+                                        },
+                                        "summary": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "deprecatedInFavorOf": {
+                                            "type": "object",
+                                            "additionalProperties": true,
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "channel": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "releasesHref": {
+                                            "type": "string"
+                                        },
+                                        "releases": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "version": {
+                                                        "type": "string"
+                                                    },
+                                                    "stability": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "dependencies": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "version": {
+                                                        "type": "string"
+                                                    },
+                                                    "definition": {
+                                                        "type": "object",
+                                                        "additionalProperties": true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "category": {
+                                            "type": "object",
+                                            "additionalProperties": true,
+                                            "properties": {
+                                                "channel": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "alias": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "href": {
+                                                    "type": "string",
+                                                    "xml": {
+                                                        "prefix": "xlink",
+                                                        "namespace": "http://www.w3.org/1999/xlink",
+                                                        "attribute": true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "license": {
+                                            "type": "string"
+                                        },
+                                        "summary": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "deprecatedInFavorOf": {
+                                            "type": "object",
+                                            "additionalProperties": true,
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "channel": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "releasesHref": {
+                                            "type": "string"
+                                        },
+                                        "releases": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "version": {
+                                                        "type": "string"
+                                                    },
+                                                    "stability": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "dependencies": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "version": {
+                                                        "type": "string"
+                                                    },
+                                                    "definition": {
+                                                        "type": "object",
+                                                        "additionalProperties": true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/p/{packageName}/maintainers.xml": {
+            "get": {
+                "tags": [
+                    "package"
+                ],
+                "summary": "List of package maintainers",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "list": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "maintainer handle\n"
+                                                    },
+                                                    "displayName": {
+                                                        "type": "string"
+                                                    },
+                                                    "homepage": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "integer",
+                                                        "nullable": true,
+                                                        "description": "active maintainer\n"
+                                                    },
+                                                    "role": {
+                                                        "type": "string",
+                                                        "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "list": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "maintainer handle\n"
+                                                    },
+                                                    "displayName": {
+                                                        "type": "string"
+                                                    },
+                                                    "homepage": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "integer",
+                                                        "nullable": true,
+                                                        "description": "active maintainer\n"
+                                                    },
+                                                    "role": {
+                                                        "type": "string",
+                                                        "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/p/{packageName}/maintainers2.xml": {
+            "get": {
+                "tags": [
+                    "package"
+                ],
+                "summary": "List of developers and their roles",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "list": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "maintainer handle\n"
+                                                    },
+                                                    "displayName": {
+                                                        "type": "string"
+                                                    },
+                                                    "homepage": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "integer",
+                                                        "nullable": true,
+                                                        "description": "active maintainer\n"
+                                                    },
+                                                    "role": {
+                                                        "type": "string",
+                                                        "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "list": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "href": {
+                                                        "type": "string",
+                                                        "xml": {
+                                                            "prefix": "xlink",
+                                                            "namespace": "http://www.w3.org/1999/xlink",
+                                                            "attribute": true
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "maintainer handle\n"
+                                                    },
+                                                    "displayName": {
+                                                        "type": "string"
+                                                    },
+                                                    "homepage": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "integer",
+                                                        "nullable": true,
+                                                        "description": "active maintainer\n"
+                                                    },
+                                                    "role": {
+                                                        "type": "string",
+                                                        "description": "maintainer role (lead/developer/helper/contributor)\n"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/allreleases.xml": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "List of all releases",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-allreleasesxml\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "releases": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "version": {
+                                                        "type": "string"
+                                                    },
+                                                    "stability": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "releases": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "object",
+                                                "additionalProperties": true,
+                                                "properties": {
+                                                    "version": {
+                                                        "type": "string"
+                                                    },
+                                                    "stability": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/latest.txt": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "Latest version number",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-latesttxt\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/stable.txt": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "Latest stable version number",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-stabletxt\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/beta.txt": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "Latest beta version number",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-betatxt\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/alpha.txt": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "Latest alpha version number",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-alphatxt\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/devel.txt": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "Latest development version number",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-develtxt\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/r/{packageName}/{version}.xml": {
+            "get": {
+                "tags": [
+                    "package",
+                    "release"
+                ],
+                "summary": "Short package info for {version}",
+                "description": "https://pear.php.net/manual/en/core.rest.php#core.rest.fileformats.r-package-012xml\n",
+                "parameters": [
+                    {
+                        "required": true,
+                        "name": "packageName",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "required": true,
+                        "name": "version",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "properties": {
+                                        "packageName": {
+                                            "type": "string"
+                                        },
+                                        "channel": {
+                                            "type": "string"
+                                        },
+                                        "version": {
+                                            "type": "string"
+                                        },
+                                        "stability": {
+                                            "type": "string"
+                                        },
+                                        "license": {
+                                            "type": "string"
+                                        },
+                                        "maintainer": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "date": {
+                                            "type": "string"
+                                        },
+                                        "notes": {
+                                            "type": "string"
+                                        },
+                                        "size": {
+                                            "type": "integer"
+                                        },
+                                        "baseUri": {
+                                            "type": "string"
+                                        },
+                                        "minPhp": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

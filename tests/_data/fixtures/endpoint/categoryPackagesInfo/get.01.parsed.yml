@@ -1,0 +1,50 @@
+list:
+    XML_fo2pdf:
+        name: 'XML_fo2pdf'
+        href: '/rest/r/xml_fo2pdf'
+        channel: 'pear.php.net'
+        category:
+            name: 'XML'
+        license: 'PHP License'
+        summary: 'Converts a xsl-fo file to pdf/ps/pcl/text/etc with the help of apache-fop'
+        description: 'Converts a xsl-fo file to pdf/ps/pcl/text/etc with the help of apache-fop'
+        releases:
+            '0.98':
+                version: '0.98'
+                stability: 'stable'
+            '0.97':
+                version: '0.97'
+                stability: 'stable'
+        dependencies:
+            '0.98':
+                version: '0.98'
+            '0.97':
+                version: '0.97'
+
+    XML_sql2xml:
+        name: 'XML_sql2xml'
+        href: '/rest/r/xml_sql2xml'
+        channel: 'pear.php.net'
+        category:
+            name: 'XML'
+        license: 'New BSD'
+        summary: 'Returns XML from a SQL-Query.'
+        description: 'desc-02'
+        deprecatedInFavorOf:
+            channel: 'pear.php.net'
+            name: 'XML_Query2XML'
+        releases:
+            '0.3.3':
+                version: '0.3.3'
+                stability: 'beta'
+            '0.3.4':
+                version: '0.3.4'
+                stability: 'beta'
+        dependencies:
+            '0.3.3':
+                version: '0.3.3'
+                definitions: 'definition-03'
+            '0.3.4':
+                version: '0.3.4'
+                definitions: 'definition-04'
+

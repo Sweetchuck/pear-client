@@ -1,0 +1,9 @@
+
+##
+# Copy this file as "./sandbox.yml", and change the values.
+##
+
+modules:
+    config:
+        'Sweetchuck\PearClient\Test\Helper\Acceptance':
+            base_uri: 'https://example.com/rest/'

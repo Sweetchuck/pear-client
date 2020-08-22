@@ -1,0 +1,7 @@
+list:
+    aashley:
+        href: '/rest/m/aashley'
+        name: 'aashley'
+    ab:
+        href: '/rest/m/ab'
+        name: 'ab'

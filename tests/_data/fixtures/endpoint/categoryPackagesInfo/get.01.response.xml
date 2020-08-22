@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<f
+    xmlns="http://pear.php.net/dtd/rest.categorypackageinfo"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xsi:schemaLocation="http://pear.php.net/dtd/rest.categorypackageinfo http://pear.php.net/dtd/rest.categorypackageinfo.xsd">
+    <pi>
+        <p>
+            <n>XML_fo2pdf</n>
+            <c>pear.php.net</c>
+            <ca xlink:href="/rest/c/XML">XML</ca>
+            <l>PHP License</l>
+            <s>Converts a xsl-fo file to pdf/ps/pcl/text/etc with the help of apache-fop</s>
+            <d>Converts a xsl-fo file to pdf/ps/pcl/text/etc with the help of apache-fop</d>
+            <r xlink:href="/rest/r/xml_fo2pdf" />
+        </p>
+        <a>
+            <r>
+                <v>0.98</v>
+                <s>stable</s>
+            </r>
+            <r>
+                <v>0.97</v>
+                <s>stable</s>
+            </r>
+        </a>
+        <deps>
+            <v>0.97</v>
+            <d>b:0;</d>
+        </deps>
+        <deps>
+            <v>0.98</v>
+            <d>b:0;</d>
+        </deps>
+    </pi>
+    <pi>
+        <p>
+            <n>XML_sql2xml</n>
+            <c>pear.php.net</c>
+            <ca xlink:href="/rest/c/XML">XML</ca>
+            <l>New BSD</l>
+            <s>Returns XML from a SQL-Query.</s>
+            <d>desc-02</d>
+            <r xlink:href="/rest/r/xml_sql2xml" />
+            <dc>pear.php.net</dc>
+            <dp>XML_Query2XML</dp>
+        </p>
+        <a>
+            <r>
+                <v>0.3.4</v>
+                <s>beta</s>
+            </r>
+            <r>
+                <v>0.3.3</v>
+                <s>beta</s>
+            </r>
+        </a>
+        <deps>
+            <v>0.3.3</v>
+            <d>s:13:"definition-03";</d>
+        </deps>
+        <deps>
+            <v>0.3.4</v>
+            <d>s:13:"definition-04";</d>
+        </deps>
+    </pi>
+</f>

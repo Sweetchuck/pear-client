@@ -1,0 +1,12 @@
+channel: 'pecl.php.net'
+packageName: 'xdebug'
+list:
+    3.0.3:
+        version: '3.0.3'
+        stability: 'stable'
+    3.0.2:
+        version: '3.0.2'
+        stability: 'stable'
+    3.0.1:
+        version: '3.0.1'
+        stability: 'stable'

@@ -1,0 +1,5 @@
+channel: 'pear.php.net'
+list:
+    - 'Archive_Tar'
+    - 'Archive_Zip'
+    - 'Auth'

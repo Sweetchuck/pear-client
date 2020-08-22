@@ -1,0 +1,7 @@
+name: 'Archive_Tar'
+channel: 'pear.php.net'
+category:
+    name: 'File Formats'
+license: 'New BSD License'
+summary: 'Tar file management class'
+description: 'This class provides handling of tar files in PHP.'
