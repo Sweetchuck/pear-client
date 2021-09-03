@@ -54,7 +54,6 @@ class PackageBetaTest extends TestBase
                     [
                         'statusCode' => 404,
                         'headers' => [
-                            'HTTP/1.1 404 Not Found' => '',
                             'Content-Type' => 'text/plain',
                         ],
                         'body' => "3.0.0RC1\n",
