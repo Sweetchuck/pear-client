@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types = 1);
+
+use League\Container\Container as LeagueContainer;
 use NuvoleWeb\Robo\Task\Config\Robo\loadTasks as ConfigLoader;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Robo\Common\ConfigAwareTrait;
 use Robo\Contract\ConfigAwareInterface;
 use Robo\Tasks;
-use Sweetchuck\LintReport\Reporter\BaseReporter;
-use League\Container\ContainerInterface;
 use Robo\Collection\CollectionBuilder;
+use Sweetchuck\LintReport\Reporter\BaseReporter;
 use Sweetchuck\Robo\Git\GitTaskLoader;
 use Sweetchuck\Robo\Phpcs\PhpcsTaskLoader;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -66,17 +68,31 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * @hook pre-command @initLintReporters
      */
-    public function setContainer(ContainerInterface $container)
+    public function initLintReporters()
     {
-        BaseReporter::lintReportConfigureContainer($container);
+        $lintServices = BaseReporter::getServices();
+        $container = $this->getContainer();
+        foreach ($lintServices as $name => $class) {
+            if ($container->has($name)) {
+                continue;
+            }
 
-        return parent::setContainer($container);
+            if ($container instanceof LeagueContainer) {
+                $container->share($name, $class);
+            }
+        }
     }
 
     /**
      * Git "pre-commit" hook callback.
+     *
+     * @command githook:pre-commit
+     *
+     * @hidden
+     *
+     * @initLintReporters
      */
     public function githookPreCommit(): CollectionBuilder
     {
@@ -91,6 +107,8 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
 
     /**
      * Run the Robo unit tests.
+     *
+     * @command test
      */
     public function test(array $suiteNames): CollectionBuilder
     {
@@ -101,6 +119,10 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
 
     /**
      * Run code style checkers.
+     *
+     * @command lint
+     *
+     * @initLintReporters
      */
     public function lint(): CollectionBuilder
     {
@@ -146,8 +168,8 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
      */
     protected function initEnvironmentTypeAndName()
     {
-        $this->environmentType = getenv($this->getEnvVarName('environment_type'));
-        $this->environmentName = getenv($this->getEnvVarName('environment_name'));
+        $this->environmentType = (string) getenv($this->getEnvVarName('environment_type'));
+        $this->environmentName = (string) getenv($this->getEnvVarName('environment_name'));
 
         if (!$this->environmentType) {
             if (getenv('CI') === 'true') {
@@ -270,14 +292,18 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
     protected function getTaskCodeceptRunSuite(string $suite): CollectionBuilder
     {
         $php = $this->getPhpExecutableWithCoverage();
+        $envVars = [
+            'COLUMNS' => getenv('COLUMNS') ?: '80',
+        ];
+        $envVars += $php['envVar'];
 
         $this->initCodeceptionInfo();
 
-        $withCoverageHtml = in_array($this->environmentType, ['dev']);
-        $withCoverageXml = in_array($this->environmentType, ['ci']);
+        $withCoverageHtml = $this->environmentType === 'dev';
+        $withCoverageXml = $this->environmentType === 'ci';
 
-        $withUnitReportHtml = in_array($this->environmentType, ['dev']);
-        $withUnitReportXml = in_array($this->environmentType, ['ci']);
+        $withUnitReportHtml = $this->environmentType === 'dev';
+        $withUnitReportXml = $this->environmentType === 'ci';
 
         $logDir = $this->getLogDir();
 
@@ -365,7 +391,7 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
         $command = vsprintf($cmdPattern, $cmdArgs);
 
         return $cb
-            ->addCode(function () use ($command) {
+            ->addCode(function () use ($envVars, $command) {
                 $this->output()->writeln(strtr(
                     '<question>[{name}]</question> runs <info>{command}</info>',
                     [
@@ -377,7 +403,7 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
                 $process = Process::fromShellCommandline(
                     $command,
                     null,
-                    $php['envVar'] ?? null,
+                    $envVars,
                     null,
                     null,
                 );
@@ -441,11 +467,6 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
         return $this->taskPhpcsLintFiles($options);
     }
 
-    /**
-     * @var array
-     */
-    protected $enabledPhpExtensions = [];
-
     protected function getLogDir(): string
     {
         $this->initCodeceptionInfo();
@@ -460,7 +481,6 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
         if (!$this->codeceptionSuiteNames) {
             $this->initCodeceptionInfo();
 
-            /** @var \Symfony\Component\Finder\Finder $suiteFiles */
             $suiteFiles = Finder::create()
                 ->in($this->codeceptionInfo['paths']['tests'])
                 ->files()
@@ -496,14 +516,17 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
 
     protected function getPhpExecutableWithCoverage(): array
     {
-        foreach ($this->config('php.executable') as $php) {
+        $default = [
+            'available' => true,
+            'envVar' => [],
+            'command' => 'php',
+        ];
+        foreach ($this->getConfig()->get('php.executable') as $php) {
             if (!empty($php['available'])) {
-                return $php;
+                return $php + $default;
             }
         }
 
-        return [
-            'command' => 'php',
-        ];
+        return $default;
     }
 }

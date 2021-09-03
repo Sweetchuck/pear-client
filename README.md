@@ -1,9 +1,10 @@
 # PEAR client
 
-[![CircleCI](https://circleci.com/gh/Sweetchuck/pear-client.svg?style=svg)](https://circleci.com/gh/Sweetchuck/pear-client)
-[![codecov](https://codecov.io/gh/Sweetchuck/pear-client/branch/1.x/graph/badge.svg?token=2kV7PSkPX5)](https://codecov.io/gh/Sweetchuck/pear-client)
+[![CircleCI](https://circleci.com/gh/Sweetchuck/pear-client/tree/1.x.svg?style=svg)](https://circleci.com/gh/Sweetchuck/pear-client/?branch=1.x)
+[![codecov](https://codecov.io/gh/Sweetchuck/pear-client/branch/1.x/graph/badge.svg?token=HSF16OGPyr)](https://app.codecov.io/gh/Sweetchuck/pear-client/branch/1.x)
 
 [PEAR channel server REST interface](https://pear.php.net/manual/en/core.rest.php)
+
 
 ## Usage
 
