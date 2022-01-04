@@ -11,6 +11,9 @@ class ReleaseList extends ListBase
 
     public string $packageName = '';
 
+    /**
+     * @var \Sweetchuck\PearClient\DataType\Release[]
+     */
     public array $list = [];
 
     public static function getPropertyInfo(): array
