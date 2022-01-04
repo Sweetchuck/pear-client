@@ -15,6 +15,7 @@ class Base implements JsonSerializable, ArrayAccess
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return property_exists($this, $offset) || array_key_exists($offset, $this->additionalProperties);
@@ -23,6 +24,7 @@ class Base implements JsonSerializable, ArrayAccess
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (property_exists($this, $offset)) {
@@ -35,6 +37,7 @@ class Base implements JsonSerializable, ArrayAccess
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (property_exists($this, $offset)) {
@@ -49,6 +52,7 @@ class Base implements JsonSerializable, ArrayAccess
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->additionalProperties[$offset]);
